@@ -20,3 +20,5 @@ CREATE TABLE public.user_transaction (
 	type_transaction_id int4 NOT NULL,
 	CONSTRAINT user_transaction_pk PRIMARY KEY (transaction_id)
 );
+
+INSERT INTO public.user_auth (login, pass) VALUES ('admin', '1234')
