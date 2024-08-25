@@ -1,6 +1,7 @@
 package dev.georgiys.model
 
 import io.micronaut.core.annotation.Introspected
+import io.micronaut.data.annotation.MappedEntity
 import io.micronaut.serde.annotation.Serdeable
 import jakarta.persistence.*
 import jakarta.validation.constraints.Max
@@ -10,6 +11,7 @@ import java.sql.Date
 @Introspected
 @Serdeable
 @Entity
+@MappedEntity
 @Table(name = "user_transaction")
 data class UserTransaction(
     @Id

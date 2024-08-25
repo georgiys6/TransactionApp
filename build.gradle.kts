@@ -33,6 +33,7 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa:4.9.0")
     implementation("org.postgresql:postgresql:42.7.4")
     implementation("io.micronaut:micronaut-aop:4.6.3")
+    implementation("io.micronaut:micronaut-jdbc-hikari")
     compileOnly("io.micronaut:micronaut-http-client")
     runtimeOnly("org.yaml:snakeyaml")
     runtimeOnly("ch.qos.logback:logback-classic")
