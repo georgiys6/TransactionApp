@@ -11,7 +11,8 @@ plugins {
 version = "0.1"
 group = "dev.georgiys"
 
-val kotlinVersion= project.properties["kotlinVersion"]
+val kotlinVersion = project.properties["kotlinVersion"]
+
 repositories {
     mavenCentral()
 }
@@ -41,14 +42,26 @@ dependencies {
     testImplementation("com.h2database:h2:2.3.232")
 }
 
-
 application {
-    mainClass = "dev.georgiys.ApplicationKt"
-}
-java {
-    sourceCompatibility = JavaVersion.toVersion("21")
+    mainClass.set("dev.georgiys.ApplicationKt")
 }
 
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+}
+
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveClassifier.set("") // Avoid "-all" classifier
+    manifest {
+        attributes("Main-Class" to "dev.georgiys.ApplicationKt")
+    }
+}
+
+tasks {
+    build {
+        dependsOn("shadowJar")
+    }
+}
 
 graalvmNative.toolchainDetection = false
 
@@ -60,8 +73,6 @@ micronaut {
         annotations("dev.georgiys.*")
     }
     aot {
-        // Please review carefully the optimizations enabled below
-        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
         optimizeServiceLoading = false
         convertYamlToJava = false
         precomputeOperations = true
@@ -73,9 +84,36 @@ micronaut {
     }
 }
 
-
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
-    jdkVersion = "21"
+    jdkVersion = "17"
+}
+tasks.named("mergeServiceFilesForOptimizedNativeJar") {
+    dependsOn("shadowJar")
 }
 
+tasks.named("prepareNativeOptimizations") {
+    dependsOn("shadowJar")
+}
 
+tasks.named("mergeServiceFilesForOptimizedJitJar") {
+    dependsOn("shadowJar")
+}
+
+tasks.named("prepareJitOptimizations") {
+    dependsOn("shadowJar")
+}
+
+tasks.named("distTar") {
+    dependsOn("shadowJar")
+}
+
+tasks.named("startScripts") {
+    dependsOn("shadowJar")
+}
+
+tasks.named("distZip") {
+    dependsOn("shadowJar")
+}
+tasks.named("startShadowScripts") {
+    dependsOn("jar")
+}
