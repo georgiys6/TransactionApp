@@ -23,6 +23,6 @@ data class User(
 
     @Max(32)
     @NotBlank
-    @Column
-    var pass: String
+    @Column(name = "pass")
+    var password: String
 )

@@ -35,7 +35,7 @@ open class AuthService(private val userRepository: IUserRepository) {
     open fun updateUser(id: Int, user: User): User {
         val prevUser = getUser(id)
         prevUser.login = user.login
-        prevUser.pass = user.pass
+        prevUser.password = user.password
         return userRepository.save(user)
     }
 

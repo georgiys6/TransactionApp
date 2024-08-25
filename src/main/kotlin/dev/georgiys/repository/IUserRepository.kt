@@ -11,6 +11,6 @@ interface IUserRepository : CrudRepository<User, Int>{
 
     override fun findAll(): List<User>
 
-    @Query("FROM User where login = :login and pass = :pass")
+    @Query("FROM User where login = :login and password = :pass")
     fun findAllUserTransaction(login: String, pass: String): User?
 }

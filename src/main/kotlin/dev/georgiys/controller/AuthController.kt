@@ -14,7 +14,7 @@ class AuthController(
     @Post
     fun authUser(@Body credentials: Map<String, String>): HttpResponse<User> {
         val login = credentials["login"] ?: ""
-        val pass = credentials["pass"] ?: ""
+        val pass = credentials["password"] ?: ""
         val req = HttpResponse.ok(authService.authUser(login, pass))
         return if (req.status == HttpStatus.OK) {
             HttpResponse.accepted()
